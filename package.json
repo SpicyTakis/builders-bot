@@ -1,0 +1,32 @@
+{
+  "name": "djs-bot-base",
+  "version": "1.0.0",
+  "description": "A simple template bot for D.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js --shards 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpicyTakis/djs-bot-base.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "websockets",
+    "database",
+    "template"
+  ],
+  "author": "SpicyTakis",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/SpicyTakis/djs-bot-base/issues"
+  },
+  "homepage": "https://github.com/SpicyTakis/djs-bot-base#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "node-fetch": "^2.6.1",
+    "pg": "^8.5.1"
+  }
+}
