@@ -8,23 +8,25 @@ const UpdateUtils = require('./updateUtils');
 const Database = require('./database')
 
 class CustomBot extends Discord.Client {
-    constructor(...opts) {
-        this.fetch = fetch
+    constructor(embeddify, owners, ...opts) {
         super(...opts);
+
+        this.owners = owners;
+        this.embeddify = embeddify;
+
+
+        this.fetch = fetch
+        fs.readdir(path.join(__dirname, '/../commands'), (err, files) => {
+            files.forEach(file => {
+                require(path.join(__dirname, '/../commands/', file))(this)
+            });
+        });
+
     }
 
     log = (...opts) => {
         let date = new Date();
-        return console.log(`[${date.toISOString}] |`, ...opts)
-    }
-
-    login = async (...opts) => {
-        fs.readdir(path.join(__dirname, '/commands'), (err, files) => {
-            files.forEach(file => {
-                require(path.join(__dirname, '/commands/', file))(this)
-            });
-        });
-        super().login(...opts)
+        return console.log(`[${date.toISOString()}] |`, ...opts)
     }
 
     /**
@@ -45,23 +47,34 @@ class CustomBot extends Discord.Client {
     }
 
     processCommands = async (ctx) => {
-        prefix = await Database.getPrefix(ctx);
+        let prefix = await Database.getPrefix(ctx);
 
         if (!ctx.message.content.startsWith(prefix)) {
             return;
         }
 
-        cleanCommand = ctx.message.content.replace(prefix, '');
+        let cleanCommand = ctx.message.content.replace(prefix, '');
 
-        args = cleanCommand.split(' ')
+        let args = cleanCommand.split(' ')
 
         for (const command of this.commands.keys()) {
-            cleanCommand = ctx.message.replace(prefix, '')
 
             if (command === args[0]) {
-                cdata = this.commands.get(commands)
+                let cdata = this.commands.get(command)
+                let runCommand = cdata.check(this, ctx)
+                if (!runCommand) { return await ctx.send('You do not have permission to run this command') }
                 cdata.execute(ctx, ...args);
             }
+        }
+    }
+
+    booleanConverter = (value) => {
+        validBooleans = ['yes', 'y', '1', 1, true, 'true']
+
+        if (validBooleans.includes(value)) {
+            return false
+        } else {
+            return true
         }
     }
 }

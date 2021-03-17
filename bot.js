@@ -1,7 +1,9 @@
 const Discord = require('discord.js')
-const utils = require('./utils')
 
-const Bot = new utils.Bot();
+const utils = require('./utils')
+const config = require('./config.json')
+
+const Bot = new utils.Bot(true, [ '362700421191565322' ]);
 
 Bot.on('message', async (message) => {
     ctx = await Bot.getContext(message);
@@ -11,4 +13,4 @@ Bot.on('message', async (message) => {
     await Bot.processCommands(ctx);
 })
 
-Bot.login('NzU4MDQ3OTg2NzY3ODg4NTY1.X2pRMw.zpgqtlW0U')
+Bot.login(config.token)

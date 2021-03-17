@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+
 class CustomContext {
     constructor(args, author, bot, channel, guild, me, message, prefix) {
         this.args = args;
@@ -12,7 +14,22 @@ class CustomContext {
         this.isSelf = this.Bot.user === this.author;
     }
 
-    send = async (...args) => {
-        this.message.channel.send(...args)
+    send = async (content, options, embeddify) => {
+        let exampleEmbed;
+        if (!options) {
+            options = {}
+        }
+
+        if (embeddify || this.Bot.embeddify) {
+            exampleEmbed = new Discord.MessageEmbed()
+            exampleEmbed.setDescription(content)
+            content = null;
+        }
+
+        options.embed = exampleEmbed;
+
+        await this.message.channel.send(content, options)
     }
 }
+
+module.exports = CustomContext
