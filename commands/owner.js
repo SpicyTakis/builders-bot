@@ -27,7 +27,7 @@ class OwnerCommands {
         };
 
         try {
-            returned = eval(`((console) => { ${code} })`)(cons);
+            returned = eval(`((console) => { ${code} })`).call(this, cons)
         } catch (e) {
             return await ctx.send(`\`\`\`js\n${e}\n\`\`\``)
         }

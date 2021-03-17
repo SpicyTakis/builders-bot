@@ -1,5 +1,5 @@
 getPrefix = async (ctx) => {
-    return 'h.';
+    return 'h.'
 }
 
 module.exports = {
