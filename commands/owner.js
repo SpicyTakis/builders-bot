@@ -40,7 +40,7 @@ class OwnerCommands {
             return;
         }
 
-        if (returned !== null) {
+        if (returned !== null && returned != undefined) {
             return await ctx.send(`\`\`\`js\n${returned}\n\`\`\``)
         }
     }

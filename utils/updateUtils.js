@@ -29,4 +29,5 @@ run = async () => {
             console.log('finished unzip');
         });
 };
-run();
+
+module.exports = run;
